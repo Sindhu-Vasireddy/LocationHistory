@@ -1,4 +1,3 @@
-
 import {
   login,
   handleIncomingRedirect,
@@ -58,9 +57,6 @@ async function GetCoordinates(){
         a.textContent=" Latitude:"+ position.coords.latitude+"°, Longitude:"+ position.coords.longitude+"°,Timestamp:"+position.timestamp ;
         document.getElementById('map-link').appendChild(a);
         document.getElementById('map-link').appendChild(document.createElement("br"));
-        // var img = new Image();
-        // img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude + "&zoom=13&size=800x400&sensor=false";
-        // $('#output').html(img);
         },  function error() {
         document.querySelector('#status').textContent = 'Unable to retrieve your location';
       },optn);
