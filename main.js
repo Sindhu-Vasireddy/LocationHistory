@@ -39,7 +39,7 @@ async function stepstoExecute(){
             document.getElementById('start_posting').addEventListener('click', async () => { GetCoordinates();document.getElementById('submit').classList.remove('hidden');
               document.getElementById('map').classList.remove('hidden');document.getElementById('submit').classList.remove('hidden');
               document.getElementById('latlong').classList.remove('hidden');document.getElementById('start_posting').classList.add('hidden') 
-              document.getElementById('stop').classList.remove('hidden');await getParticipants();prepareDropdown();document.getElementById('selectPerson').classList.remove('hidden');
+              document.getElementById('stop').classList.remove('hidden');await getParticipants();fetchLocations();//document.getElementById('selectPerson').classList.remove('hidden');
             });
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -65,8 +65,6 @@ let pod_url;
 
 const map= L.map('map');
 const marker=L.marker([0,0]);
-const marker_=L.marker([0,0]);
-let friend_container;
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 document.getElementById('Issuer_SC').addEventListener('click', () => { document.getElementById('Issuer_SC_username').classList.remove('hidden');document.getElementById('ok_IssuerSC').classList.remove('hidden');toHide();});
 document.getElementById('ok_IssuerSC').addEventListener('click', () => { let Username_SolidCommunity = document.getElementById('Issuer_SC_username').value; window.sessionStorage.setItem('Username_SolidCommunity_Later',Username_SolidCommunity);
@@ -75,14 +73,14 @@ document.getElementById('ok_IssuerSC').classList.add('hidden');document.getEleme
 document.getElementById('Issuer_CSS').addEventListener('click', () => { document.getElementById('issuer').classList.remove('hidden'); document.getElementById('Issuer_SC').classList.add('hidden'); document.getElementById('Issuer_CSS').classList.add('hidden');document.getElementById('CSS_Login').classList.remove('hidden');});
 document.getElementById('CSS_Login').addEventListener('click', () => { let Issuer = document.getElementById('issuer').value; window.sessionStorage.setItem('Issuer_later',Issuer);console.log(Issuer); Login(Issuer)});
 
-document.getElementById('submit').addEventListener('click', ()=>{ friend_container=document.getElementById("selectPerson").value;friend_container=friend_container+'public/YourLocationHistory/';setInterval(caller,1000);/*sendAMessage();*/});
+//document.getElementById('submit').addEventListener('click', ()=>{ friend_container=document.getElementById("selectPerson").value;friend_container=friend_container+'public/YourLocationHistory/';setInterval(caller,5000);/*sendAMessage();*/});
 
 document.getElementById('message').textContent="Log in using your provider!";
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-async function myfetchFunction(){
-  return await fetch(friend_container, {
+async function myfetchFunction(url){
+  return await fetch(url, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/sparql-update','Cache-Control': 'no-cache' },
+//        headers: { 'Content-Type': 'application/sparql-update','Cache-Control': 'no-cache' },
         });
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -137,13 +135,14 @@ async function getParticipants(){
 
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-async function prepareDropdown(){
-
-Object.values(l_o_p).forEach( element=> { 
-   const optionObj = document.createElement("option");
-   optionObj.textContent = element;
-   document.getElementById("selectPerson").appendChild(optionObj);
-});  
+async function fetchLocations(){
+  Object.values(l_o_p).forEach( element=> {
+    window.setInterval(
+      () => {
+        console.log(element);
+        getLatLongofFriend(element + 'public/YourLocationHistory/');
+      }, 5000);
+  });  
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -163,7 +162,7 @@ async function GetCoordinates(){
         document.getElementById('map-link').appendChild(document.createElement("br"));
 
 
-        map.setView([position.coords.latitude,position.coords.longitude], 15);
+        map.setView([position.coords.latitude,position.coords.longitude], 12);
         const attribution= '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
         const tileURL='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
@@ -212,8 +211,7 @@ async function test(friend_container){
       // Fetch the file name corresponding to the latest timestamp
       const bindingsStream_ = await myEngine.queryBindings(`
       SELECT ?s WHERE{
-                ?s ?p <http://www.w3.org/ns/ldp#Resource>.
-        ?s <http://purl.org/dc/terms/modified> \"${bindings[0].get('o').value}\"^^<${bindings[0].get('o').datatype.value}>.
+                ?s <http://purl.org/dc/terms/modified> \"${bindings[0].get('o').value}\"^^<${bindings[0].get('o').datatype.value}>.
       }`, {
         sources: [`${friend_container}`],
         fetch:myfetchFunction
@@ -225,53 +223,43 @@ async function test(friend_container){
       //-------------------------------------------------------------------
       //Fetch the latitude from the file corresponding to the latest timestamp
       const bindingsStream_1 = await myEngine.queryBindings(`
-      SELECT ?o WHERE {
-      ?s <https://schema.org/latitude> ?o
+      SELECT ?lat ?long WHERE {
+      ?s <https://schema.org/latitude> ?lat ;
+         <https://schema.org/longitude> ?long
       }`, {
         sources: [`${bindings_[bindings_.length-1].get('s').value}`],
       });
 
       const bindings_1 = await bindingsStream_1.toArray();
-
-      //-------------------------------------------------------------------
-      //Fetch the longitude from the file corresponding to the latest timestamp
-      const bindingsStream_2 = await myEngine.queryBindings(`
-      SELECT ?o WHERE {
-      ?s <https://schema.org/longitude> ?o
-      }`, {
-        sources: [`${bindings_[bindings_.length-1].get('s').value}`],
-      });
-
-      const bindings_2 = await bindingsStream_2.toArray();
-
+      if (bindings_1.length == 0 ){
+        console.error('Couldn’t find a long/lat pair at ', friend_container);
+        return null;
+      }
+      //console.log(bindings_1[0].get('lat').value, bindings_1[0].get('long').value, friend_container);
       //Return the latest Latitude and Longitude:
-      const lat_long_list=[bindings_1[0].get('o').value,bindings_2[0].get('o').value];
-
-      myEngine.invalidateHttpCache();
-
+      const lat_long_list=[bindings_1[0].get('lat').value,bindings_1[0].get('long').value];
       return(lat_long_list);
 
 }
+
+const attribution= '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const tileURL='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+const tiles=L.tileLayer(tileURL,{attribution});
+tiles.addTo(map);
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- async function caller(){
-   GetLatLongofFriend(friend_container);
- }
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-async function GetLatLongofFriend(friend_container){
-        const lat_long_list=await test(friend_container);
-
-        map.setView(lat_long_list, 15);
-        const attribution= '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-        const tileURL='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-
-        const tiles=L.tileLayer(tileURL,{attribution});
-        tiles.addTo(map);
-        
-        marker_.addTo(map).setLatLng(lat_long_list);
-        marker_._icon.classList.add("huechange");
-        marker_.bindTooltip(friend_container).openTooltip();
-
-} 
+async function getLatLongofFriend(friendContainer){
+  const lat_long_list = await test(friendContainer);
+  if (lat_long_list) {
+    //not sure we need to center here -- need to center acording to all friend makers
+    //map.setView(lat_long_list, 15);
+    let friendMarker = L.marker(lat_long_list);
+    friendMarker.addTo(map);
+    friendMarker._icon.classList.add("huechange");
+    friendMarker.bindTooltip(friendContainer).openTooltip();
+  }
+}
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
