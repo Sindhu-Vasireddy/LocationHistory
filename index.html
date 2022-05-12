@@ -5,22 +5,46 @@
 		<title>Location History </title>
 		<script defer src="index.js"></script>
 		<style> .hidden { visibility: hidden; display: none;} </style>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+   crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+   integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+   crossorigin=""></script>
+   <style>
+   	#map { height: 300px; }
+	img.huechange { filter: hue-rotate(120deg); }
+   </style>
+
 	</head>
 	<body>
 		<div id="message"></div>
 		<div id="front_page">
-			<input type="text" id="issuer" placeholder="Enter your Issuer" class="hidden">
-        	<button id="Issuer_1">Inrupt</button>
-        	<button id="Issuer_2">Solid Community</button>
-        	<button id="Issuer_others">Others</button>
-        	<button id="Others_Login" class="hidden">Login</button>
-        	<input type="text" id="container" placeholder="Enter the location of your container" class="hidden">
-        	<button id="start_posting" class="hidden">Post</button>
+
+        	<button id="Issuer_SC">Solid Community</button>
+        	<input type="text" id="Issuer_SC_username" placeholder="Enter your Username" class="hidden">
+        	<button id="ok_IssuerSC" class="hidden">Ok</button>
+
+        	<button id="Issuer_CSS">CSS</button>
+        	<input type="text" id="issuer" placeholder="Enter your Pod URL" class="hidden">
+        	<button id="CSS_Login" class="hidden">Login</button>
+
+        	
+        	<button id="start_posting" class="hidden">Post Location History</button>
+        	<label for="selectPerson" id="latlong" class="hidden">Get Lat-Long of Someone!</label> 
+        	<select name="selectPerson" id="selectPerson" class="hidden">
+    			<option>Choose a Person</option>
+			</select>
+			<input type="submit" value="Submit" id="submit" class="hidden"/>
     	</div>
+
     	<div id="output">
     	</div>
+    	<div id="map" class="hidden"></div>
     	<p id = "status"></p>
     	<a id = "map-link" target="_blank"><br/></a>
-    	<button id="stop" class="hidden">Stop</button>
+    	<br><br>
+    	<button id="stop" class="hidden">Stop your location capture</button>
+    	<button id="start" class="hidden">Start your location capture</button>
 	</body>
 	</html>

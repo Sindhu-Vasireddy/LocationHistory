@@ -1,4 +1,6 @@
 const path = require("path");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
+
 module.exports = {
    mode: "development",
    entry: path.resolve(__dirname,"main.js"),
@@ -16,5 +18,8 @@ module.exports = {
   },
   devServer: {
     static: "./"
-  }
+  },    
+  plugins: [
+        new NodePolyfillPlugin({ excludeAliases: ['console'] })
+    ]
 };
