@@ -8,4 +8,5 @@
             ```npm run start```
 # Note:- 
 A. To Login with Solidcommunity.net server enter your username when prompted.
+
 B. To Login with CSS enter your POD url e.g. (https://{username}.pod.knows.idlab.ugent.be/) 
