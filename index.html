@@ -12,8 +12,8 @@
    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
    crossorigin=""></script>
    <style>
-   	#map { height: 300px; }
-	img.huechange { filter: hue-rotate(120deg); }
+   	#map { height: 600px; }
+	img.huechange { filter: hue-rotate(10deg); }
    </style>
 
 	</head>
@@ -21,21 +21,17 @@
 		<div id="message"></div>
 		<div id="front_page">
 
-        	<button id="Issuer_SC">Solid Community</button>
+        	<button id="Issuer_SC" class="hidden">Solid Community</button>
         	<input type="text" id="Issuer_SC_username" placeholder="Enter your Username" class="hidden">
         	<button id="ok_IssuerSC" class="hidden">Ok</button>
 
-        	<button id="Issuer_CSS">CSS</button>
+        	<button id="Issuer_CSS"  class="hidden">CSS</button>
         	<input type="text" id="issuer" placeholder="Enter your Pod URL" class="hidden">
         	<button id="CSS_Login" class="hidden">Login</button>
 
-        	
+        	<input type="text" id="webid" placeholder="Enter your webID">
+        	<button id="webid_Login">Login</button>
         	<button id="start_posting" class="hidden">Post Location History</button>
-        	<label for="selectPerson" id="latlong" class="hidden">Get Lat-Long of Someone!</label> 
-        	<select name="selectPerson" id="selectPerson" class="hidden">
-    			<option>Choose a Person</option>
-			</select>
-			<input type="submit" value="Submit" id="submit" class="hidden"/>
     	</div>
 
     	<div id="output">
