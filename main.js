@@ -69,6 +69,13 @@ let pod_url;
 
 const map= L.map('map');
 const marker=L.marker([0,0]);
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+async function myfetchFunction(url){
+  return await fetch(url, {
+       method: 'GET',
+       headers: { 'Content-Type': 'application/sparql-update','Cache-Control': 'no-cache' },
+        });
+}
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 async function getIssuerFromWebID(webid){
@@ -80,11 +87,10 @@ async function getIssuerFromWebID(webid){
     sources: [`${webid}`],
   });
     const bindings = await bindingsStream.toArray();
-        console.log(`${bindings[0].get('o').value}`);
+        // console.log(`${bindings[0].get('o').value}`);
       return(bindings[0].get('o').value); 
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 async function getDataFromWebID(webid){
   var myEngine_getData = new QueryEngine();
@@ -96,7 +102,10 @@ async function getDataFromWebID(webid){
   }`, {
     sources: [`${webid}`],
   });
+  console.log(webid);
     const bindings = await bindingsStream.toArray();
+    console.log(bindings);
+    console.log("--------------------");
         console.log(`${[bindings[0].get('givenName').value,bindings[0].get('familyName').value,bindings[0].get('img').value]}`);
       return([bindings[0].get('givenName').value,bindings[0].get('familyName').value,bindings[0].get('img').value]); 
 }
@@ -111,17 +120,10 @@ document.getElementById('CSS_Login').addEventListener('click', () => { let Issue
 
 document.getElementById('webid_Login').addEventListener('click', async () => { let webID = document.getElementById('webid').value; console.log(webID);let oidcIssuer=await getIssuerFromWebID(webID);window.sessionStorage.setItem('webID_later',webID);window.sessionStorage.setItem('oidcIssuer_later',oidcIssuer);console.log(`This is the oidcIssuer:${oidcIssuer}`); Login(oidcIssuer)});
 
-document.getElementById('message').textContent="Log in using your webid!";
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-async function myfetchFunction(url){
-  return await fetch(url, {
-       method: 'GET',
-       headers: { 'Content-Type': 'application/sparql-update','Cache-Control': 'no-cache' },
-        });
-}
+document.getElementById('message').textContent="Log in using your webid! (The App expects the WebID to have the following predicates solid:oidcIssuer, foaf:givenName, foaf:familyName, and foaf:img in the triples.) e.g.https://data.knows.idlab.ugent.be/person/SindhuVasireddy/#me";
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 async function settingContainer(){
-console.log(window.sessionStorage);
+// console.log(window.sessionStorage);
 switch(Object.keys(window.sessionStorage)[0]){
 
     case "webID_later":
@@ -186,7 +188,7 @@ async function fetchLocations(){
   Object.values(l_o_p).forEach( element=> {
     window.setInterval(
       () => {
-        console.log(element);
+        console.log('*****************************************************');
         getLatLongofFriend(element);
       }, 5000);
   });  
@@ -201,7 +203,7 @@ async function GetCoordinates(){
   };
   if (navigator.geolocation) {
       locator=navigator.geolocation.watchPosition(async function(position){
-        console.log(position);
+        // console.log(position);
         var a = document.createElement('a');
         a.href="https://www.openstreetmap.org/#map=18/"+ position.coords.latitude + "/" + position.coords.longitude;
         a.textContent=" Latitude:"+ position.coords.latitude+"°, Longitude:"+ position.coords.longitude+"°,Timestamp:"+position.timestamp ;
@@ -245,12 +247,12 @@ async function test(friend_container){
       var myEngine = new QueryEngine();
       // Fetch the latest timestamp  
       const bindingsStream = await myEngine.queryBindings(`
-      SELECT (STRAFTER(?fileName, "/YourLocationHistory/") AS ?timestamp) 
+      SELECT (STRAFTER(?fileName, "/YourLocationHistory/") AS ?tmstmp) 
       WHERE {
         ?s <http://www.w3.org/ns/ldp#contains> ?name .
         BIND (STR(?name) AS ?fileName)
       }
-      ORDER BY DESC(?timestamp)`, {
+      ORDER BY DESC(?tmstmp)`, {
         sources: [`${friend_container}`],
         fetch: myfetchFunction
       });
@@ -258,8 +260,8 @@ async function test(friend_container){
 
       // Consume results as an array (easier)
       const bindings = await bindingsStream.toArray();
-      console.log(bindings[0].get('timestamp').value);
-      const timestamp=bindings[0].get('timestamp').value;
+      // console.log(bindings[0]);
+      const tmstmp=bindings[0].get('tmstmp').value;
 //---------------------------------------------------------------------------------------
       //Fetch the lat-long from the file corresponding to the latest timestamp
       const bindingsStream_1 = await myEngine.queryBindings(`
@@ -267,7 +269,7 @@ async function test(friend_container){
       ?s <https://schema.org/latitude> ?lat ;
          <https://schema.org/longitude> ?long
       }`, {
-        sources: [`${friend_container}${bindings[0].get('timestamp').value}`],
+        sources: [`${friend_container}${bindings[0].get('tmstmp').value}`],
       });
 
 
@@ -276,8 +278,8 @@ async function test(friend_container){
       
       //Return the latest Latitude and Longitude:
       const lat_long_list=[bindings_1[0].get('lat').value,bindings_1[0].get('long').value];
-      let loc_array=[lat_long_list,timestamp]
-      console.log(loc_array);
+      let loc_array=[lat_long_list,tmstmp]
+      // console.log(loc_array);
       return(loc_array);
 
 }
@@ -293,27 +295,30 @@ tiles.addTo(map);
 async function getLatLongofFriend(friend_webid){
   let friendContainer=await getIssuerFromWebID(friend_webid) + 'public/YourLocationHistory/';
   let data_array=await getDataFromWebID(friend_webid);
+  console.log(data_array);
   const loc_array = await test(friendContainer);
   const lat_long_list = loc_array[0];
-  const timestamp =loc_array[1];
-  console.log("Coming in again!");
+  const tmstmp_ =loc_array[1];
+  console.log(tmstmp_);
+  // var tmstmp_1=new Date(tmstmp_);
+  // console.log(tmstmp_1);
     if (lat_long_list) {
-      console.log(`This is the Lat-Long inside if condition:${lat_long_list}`)
+      // console.log(`This is the Lat-Long inside if condition:${lat_long_list}`)
     //not sure we need to center here -- need to center acording to all friend makers
     // map.setView(lat_long_list, 15);
     map.eachLayer(function (layer) { 
-      console.log(layer);
+      // console.log(layer);
       if(layer._content){
          if(layer._content.split('\r\n')[0]==data_array[0]+` ${data_array[1]}`){
-        console.log(`removing _tooltip: ${layer}`);
+        // console.log(`removing _tooltip: ${layer}`);
         map.removeLayer(layer);
               }  
       }
 
       if(layer._tooltipHandlersAdded){
-        console.log(layer._tooltip._content);
+        // console.log(layer._tooltip._content);
         if(layer._tooltip._content.split('\r\n')[0]==data_array[0]+` ${data_array[1]}`){
-          console.log(`removing marker: ${layer}`);
+          // console.log(`removing marker: ${layer}`);
           map.removeLayer(layer);
         }
               }
@@ -328,8 +333,8 @@ async function getLatLongofFriend(friend_webid){
     // friendMarker.addTo(map);
     friendMarker.addTo(map);
     friendMarker._icon.classList.add("huechange");
-    friendMarker.bindTooltip(data_array[0]+` ${data_array[1]}`+`\r\n Last seen at ${Date(timestamp)}`).openTooltip();
-    console.log(friendMarker.getTooltip()._content);
+    friendMarker.bindTooltip(data_array[0]+` ${data_array[1]}`+`\r\n Last seen at ${new Date(Number(tmstmp_)).toLocaleString()}`).openTooltip();
+    // console.log(friendMarker.getTooltip()._content);
   }
 }
 
@@ -343,7 +348,7 @@ async function GivePublicAccesstotheContainer(){
     <http://www.w3.org/ns/auth/acl#accessTo> <${container}>;
     <http://www.w3.org/ns/auth/acl#default> <${container}>;
     <http://www.w3.org/ns/auth/acl#agentClass> <http://xmlns.com/foaf/0.1/Agent>.`
-    console.log(container);
+    // console.log(container);
     console.log(query);
         // Send a PUT request to post to the source
         const response = await solidfetch(container+'.acl', {
@@ -355,38 +360,4 @@ async function GivePublicAccesstotheContainer(){
         
 
 }
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// async function sendAMessage(){
-//       const query = `INSERT DATA {<${friend_container.split('public/')[0]}> <http://www.w3.org/ns/auth/acl#accessTo> <${container}>; <http://www.w3.org/ns/auth/acl#mode> <http://www.w3.org/ns/auth/acl#Read>}`
-//         const fileresponse_ = await solidfetch(friend_container+`inbox/personsAccessingYourPod.ttl`, {
-//         method: 'GET',
-//         headers: { 'Content-Type': 'text/turtle' },
-//         });
-//         console.log(fileresponse_);
-//         if (400<=fileresponse_.status<500){
-//         const response_ = await solidfetch(friend_container+`inbox/personsAccessingYourPod.ttl`, {
-//         method: 'PUT',
-//         headers: { 'Content-Type': 'text/turtle' },
-//         body: ''
-//         });
-//         console.log(response_);}
-// 
-//         // Send a PUT request to post to the source
-//         const response = await solidfetch(friend_container+`inbox/personsAccessingYourPod.ttl`, {
-//         method: 'PATCH',
-//         headers: { 'Content-Type': 'application/sparql-update' },
-//         body: query,
-//         });
-// 
-//         console.log(query);
-//         console.log(response);
-// }
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-//https://pod.rubendedecker.be/
-//https://pmcolpae.pod.knows.idlab.ugent.be/
