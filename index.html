@@ -3,7 +3,6 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Location History </title>
-		<script defer src="index.js"></script>
 		<style> .hidden { visibility: hidden; display: none;} </style>
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
@@ -21,14 +20,6 @@
 		<div id="message"></div>
 		<div id="front_page">
 
-        	<button id="Issuer_SC" class="hidden">Solid Community</button>
-        	<input type="text" id="Issuer_SC_username" placeholder="Enter your Username" class="hidden">
-        	<button id="ok_IssuerSC" class="hidden">Ok</button>
-
-        	<button id="Issuer_CSS"  class="hidden">CSS</button>
-        	<input type="text" id="issuer" placeholder="Enter your Pod URL" class="hidden">
-        	<button id="CSS_Login" class="hidden">Login</button>
-
         	<input type="text" id="webid" placeholder="Enter your webID">
         	<button id="webid_Login">Login</button>
         	<button id="start_posting" class="hidden">Post Location History</button>
@@ -36,11 +27,20 @@
 
     	<div id="output">
     	</div>
+
+    	<button id="req_frnd" class="hidden">Request Friend's Location!</button>
+    	<input type="text" id="friend_webid" placeholder="Enter your friend's webid to request their location!" class="hidden">
+    	<button id="request" class="hidden">Request</button>
+
+    	<div id="approve_revoke">
+    	</div>
+
     	<div id="map" class="hidden"></div>
     	<p id = "status"></p>
     	<a id = "map-link" target="_blank"><br/></a>
     	<br><br>
     	<button id="stop" class="hidden">Stop your location capture</button>
     	<button id="start" class="hidden">Start your location capture</button>
+    	<script defer src="index.js"></script>
 	</body>
 	</html>
