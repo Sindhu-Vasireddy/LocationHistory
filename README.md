@@ -5,8 +5,6 @@
 4. Generate the webpack bundle using: 
             ```npm run build```
 6. Start the server using: 
-            ```npm run start```
+            ```npm start```
 # Note:- 
-A. To Login with Solidcommunity.net server enter your username when prompted.
-
-B. To Login with CSS enter your POD url e.g. (https://{username}.pod.knows.idlab.ugent.be/) 
+A. Enter your webid to login to your pod e.g. (https://data.knows.idlab.ugent.be/person/SindhuVasireddy/#me) 
