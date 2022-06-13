@@ -1,0 +1,11 @@
+@prefix wgs84: 	<http://www.w3.org/2003/01/geo/wgs84_pos#>.
+@prefix dct: 	<http://purl.org/dc/terms/>.
+@prefix plh:	<https://w3id.org/personallocationhistory#> .
+@prefix xsd:	<http://www.w3.org/2001/XMLSchema#>.
+
+<> a plh:Point;
+	wgs84:lon 35.8648067;
+  	wgs84:long -120.6195831;
+  	wgs84:alt 12.75;
+	dct:created "2020-03-21T09:31:48Z"^^xsd:dateTime ;
+	plh:transportmode plh:Walking.
