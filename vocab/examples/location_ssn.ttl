@@ -12,11 +12,13 @@
 
 <locationObservation1> a sosa:Observation;
     sosa:hasResult <locationObservation1_result>;
+    sosa:featureOfInterest <https://pietercolpaert.be/#me> ;
+    sosa:hasSimpleResult "POINT(54.6195831 35.8648067)"^^geo:wktLiteral ;
     sosa:madeBySensor <locationSensor>;
-    sosa:resultTime "2020-03-21T09:31:48Z"^^xsd:dateTime.
+    sosa:resultTime "2022-06-14T09:31:48Z"^^xsd:dateTime.
 
 <locationObservation1_result> a sosa:Result;
     wgs84:lon 35.8648067;
-  	wgs84:long -120.6195831;
-  	wgs84:alt 12.75;
+    wgs84:lat 54.6195831;
+    wgs84:alt 12.75;
     plh:transportmode plh:Walking.
