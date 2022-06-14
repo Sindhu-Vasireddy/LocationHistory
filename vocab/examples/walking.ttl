@@ -8,4 +8,5 @@
   	wgs84:long -120.6195831;
   	wgs84:alt 12.75;
 	dct:created "2020-03-21T09:31:48Z"^^xsd:dateTime ;
+	dct:creator <https://data.knows.idlab.ugent.be/person/woslabbi/#me> ;
 	plh:transportmode plh:Walking.

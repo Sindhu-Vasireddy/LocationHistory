@@ -19,10 +19,10 @@ plh:Ontology	a owl:ontology;
     vann:preferredNamespacePrefix  "plh" ;
     vann:preferredNamespaceUri     <https://w3id.org/personallocationhistory#> ;
     dct:creator                    <https://data.knows.idlab.ugent.be/person/woslabbi/#me> ;
-    dct:creator                    <https://data.knows.idlab.ugent.be/person/SindhuVasireddy/#me ;
+    dct:creator                    <https://data.knows.idlab.ugent.be/person/SindhuVasireddy/#me> ;
     dct:creator                    <https://pietercolpaert.be/#me> ;
     dct:issued                     "2022-06-10"^^xsd:date ;
-    dct:modified                   "2022-06-13"^^xsd:date .
+    dct:modified                   "2022-06-14"^^xsd:date .
 
 plh:Point a rdfs:Class;
 	rdfs:subClassOf wgs84:Point;

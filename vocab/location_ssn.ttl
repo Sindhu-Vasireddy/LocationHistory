@@ -1,0 +1,22 @@
+@prefix sosa: <http://www.w3.org/ns/sosa/>.
+@prefix wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix plh: <https://w3id.org/personallocationhistory#> .
+
+<androidPhone> a sosa:Platform;
+    sosa:hosts <locationSensor>.
+
+<locationSensor> a sosa:Sensor;
+    sosa:madeObservation <locationObservation1>;
+    sosa:isHostedBy <androidPhone>.
+
+<locationObservation1> a sosa:Observation;
+    sosa:hasResult <locationObservation1_result>;
+    sosa:madeBySensor <locationSensor>;
+    sosa:resultTime "2020-03-21T09:31:48Z"^^xsd:dateTime.
+
+<locationObservation1_result> a sosa:Result;
+    wgs84:lon 35.8648067;
+  	wgs84:long -120.6195831;
+  	wgs84:alt 12.75;
+    plh:transportmode plh:Walking.
