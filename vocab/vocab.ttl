@@ -32,7 +32,7 @@ plh:TransportMode a rdfs:Class;
 	rdfs:comment "The transport mode expresses the way which a person was moving from one place to another.";
 	rdfs:label "Transport Mode"@en.
 
-plh:transportmode a rdfs:Property;
+plh:transportMode a rdfs:Property;
 	rdfs:comment "Links the transport mode to a location point";
 	rdfs:label "Transport Mode"@en.
 

@@ -25,7 +25,7 @@
     wgs84:lon 35.8648067;
     wgs84:lat 54.6195831;
     wgs84:alt 12.75;
-    plh:transportmode plh:Walking.
+    plh:transportMode plh:Walking.
 
 <location> a sosa:ObservableProperty;
     rdfs:comment "The Geographic location observed by a sensor."@en ;
