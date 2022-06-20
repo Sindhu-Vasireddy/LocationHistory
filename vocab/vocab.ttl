@@ -1,42 +1,48 @@
-@prefix plh:	<https://w3id.org/personallocationhistory#> .
+@prefix tm:	<https://w3id.org/transportmode#> .
 @prefix foaf: 	<http://xmlns.com/foaf/0.1/>.
 @prefix wgs84:	<http://www.w3.org/2003/01/geo/wgs84_pos#>.
-@prefix owl: 	<http://www.w3.org/2002/07/owl#>.
 @prefix cc: 	<http://creativecommons.org/ns#>.
 @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#>.
 @prefix dct: 	<http://purl.org/dc/terms/>.
 @prefix vann: 	<http://purl.org/vocab/vann/>.
 @prefix rdf: 	<http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix skos: 	<http://www.w3.org/2004/02/skos/core#>.
 
-<https://w3id.org/personallocationhistory>
-        a                              foaf:Document ;
-        foaf:primaryTopic plh:Ontology .
+<https://w3id.org/transportmode> a foaf:Document;
+        foaf:primaryTopic tm:TransportMode;
+		foaf:topic tm:transportMode.
 
-plh:Ontology	a owl:ontology;
+tm:transportMode a rdfs:Property;
+	rdfs:comment "Links to the kind of transport mode being used.";
+	rdfs:label "Transport Mode"@en;
+	rdfs:range tm:TransportMode.
+
+tm:TransportMode a skos:ConceptScheme; 
+	skos:prefLabel "Transport Mode"@en ;
+	skos:definition "The transport mode expresses the way which a person was moving from one place to another.";
 	cc:license <https://creativecommons.org/licenses/by/4.0/> ;
-	rdfs:comment				   "An ontology with as goal to describe a location point with additional metadata";
-    rdfs:label                     "Personal Location History Vocabulary"@en ;
-    vann:preferredNamespacePrefix  "plh" ;
-    vann:preferredNamespaceUri     <https://w3id.org/personallocationhistory#> ;
-    dct:creator                    <https://data.knows.idlab.ugent.be/person/woslabbi/#me> ;
-    dct:creator                    <https://data.knows.idlab.ugent.be/person/SindhuVasireddy/#me> ;
-    dct:creator                    <https://pietercolpaert.be/#me> ;
-    dct:issued                     "2022-06-10"^^xsd:date ;
-    dct:modified                   "2022-06-14"^^xsd:date .
-
-plh:Point a rdfs:Class;
-	rdfs:subClassOf wgs84:Point;
-	rdfs:label "Location Point"@en.
-
-plh:TransportMode a rdfs:Class;
 	rdfs:comment "The transport mode expresses the way which a person was moving from one place to another.";
-	rdfs:label "Transport Mode"@en.
+	rdfs:label "Transport Mode"@en;
+	vann:preferredNamespacePrefix "tm" ;
+    vann:preferredNamespaceUri <https://w3id.org/transportmode#> ;
+    dct:creator <https://data.knows.idlab.ugent.be/person/woslabbi/#me> ;
+    dct:creator <https://data.knows.idlab.ugent.be/person/SindhuVasireddy/#me> ;
+    dct:creator <https://pietercolpaert.be/#me> ;
+    dct:issued "2022-06-10"^^xsd:date ;
+    dct:modified "2022-06-14"^^xsd:date .
 
-plh:transportMode a rdfs:Property;
-	rdfs:comment "Links the transport mode to a location point";
-	rdfs:label "Transport Mode"@en.
-
-plh:Walking a rdfs:Class;
-	rdfs:subClassOf plh:TransportMode;
+tm:Walking a skos:Concept; 
+	skos:inScheme tm:TransportMode;
 	rdfs:comment "This transport mode expresses that a person is walking.";
 	rdfs:label "Walking"@en.
+
+tm:Bicycling a skos:Concept; 
+	skos:inScheme tm:TransportMode;
+	rdfs:comment "This transport mode expresses that a person is bicycling.";
+	rdfs:label "Bicycling"@en.
+	
+tm:CarDriving a skos:Concept; 
+	skos:inScheme tm:TransportMode;
+	rdfs:comment "This transport mode expresses that a person is driving a car.";
+	rdfs:label "Car Driving"@en.
+	
