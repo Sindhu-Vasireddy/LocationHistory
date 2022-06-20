@@ -9,11 +9,10 @@
 @prefix skos: 	<http://www.w3.org/2004/02/skos/core#>.
 
 <https://w3id.org/transportmode> a foaf:Document;
-        foaf:primaryTopic tm:TransportMode;
-		foaf:topic tm:transportMode.
+	foaf:primaryTopic tm:TransportMode.
 
 tm:transportMode a rdfs:Property;
-	rdfs:comment "Links to the kind of transport mode being used.";
+	skos:definition "Links to the kind of transport mode being used.";
 	rdfs:label "Transport Mode"@en;
 	rdfs:range tm:TransportMode.
 
@@ -24,25 +23,25 @@ tm:TransportMode a skos:ConceptScheme;
 	rdfs:comment "The transport mode expresses the way which a person was moving from one place to another.";
 	rdfs:label "Transport Mode"@en;
 	vann:preferredNamespacePrefix "tm" ;
-    vann:preferredNamespaceUri <https://w3id.org/transportmode#> ;
-    dct:creator <https://data.knows.idlab.ugent.be/person/woslabbi/#me> ;
-    dct:creator <https://data.knows.idlab.ugent.be/person/SindhuVasireddy/#me> ;
-    dct:creator <https://pietercolpaert.be/#me> ;
-    dct:issued "2022-06-10"^^xsd:date ;
-    dct:modified "2022-06-14"^^xsd:date .
+	vann:preferredNamespaceUri <https://w3id.org/transportmode#> ;
+	dct:creator <https://data.knows.idlab.ugent.be/person/woslabbi/#me> ;
+	dct:creator <https://data.knows.idlab.ugent.be/person/SindhuVasireddy/#me> ;
+	dct:creator <https://pietercolpaert.be/#me> ;
+	dct:issued "2022-06-10"^^xsd:date ;
+	dct:modified "2022-06-14"^^xsd:date .
 
 tm:Walking a skos:Concept; 
 	skos:inScheme tm:TransportMode;
-	rdfs:comment "This transport mode expresses that a person is walking.";
-	rdfs:label "Walking"@en.
+	skos:definition "This transport mode expresses that a person is walking.";
+	skos:prefLabel "Walking"@en.
 
 tm:Bicycling a skos:Concept; 
 	skos:inScheme tm:TransportMode;
-	rdfs:comment "This transport mode expresses that a person is bicycling.";
-	rdfs:label "Bicycling"@en.
+	skos:definition "This transport mode expresses that a person is bicycling.";
+	skos:prefLabel "Bicycling"@en.
 	
 tm:CarDriving a skos:Concept; 
 	skos:inScheme tm:TransportMode;
-	rdfs:comment "This transport mode expresses that a person is driving a car.";
-	rdfs:label "Car Driving"@en.
+	skos:definition "This transport mode expresses that a person is driving a car.";
+	skos:prefLabel "Car Driving"@en.
 	
