@@ -395,24 +395,24 @@ async function GetCoordinates(){
         @prefix geo: <http://www.opengis.net/ont/geosparql#>.
         @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 
-        <${navigator.platform}> a sosa:Platform;
+        <${navigator.platform.split(" ").join('')}> a sosa:Platform;
         sosa:hosts <locationSensor>.
 
         <locationSensor> a sosa:Sensor;
         sosa:madeObservation <>;
         sosa:observes <location>;
-        sosa:isHostedBy <${navigator.platform}>.
+        sosa:isHostedBy <${navigator.platform.split(" ").join('')}>.
 
         <> a sosa:Observation;
-        sosa:observedProperty plh:Point ;
+        sosa:observedProperty <location> ;
         sosa:hasResult <_result>;
         sosa:featureOfInterest <${window.sessionStorage.getItem('webID_later')}> ;
-        sosa:hasSimpleResult "POINT(${position.coords.latitude} ${position.coords.longitude})"^^geo:wktLiteral ;
+        sosa:hasSimpleResult "POINT(${position.coords.longitude},${position.coords.latitude})"^^geo:wktLiteral ;
         sosa:madeBySensor <locationSensor>;
-        sosa:resultTime "${new Date(Number(position.timestamp)).toLocaleString()}"^^xsd:dateTime.
+        sosa:resultTime "${new Date(Number(position.timestamp)).toISOString()}"^^xsd:dateTime.
 
         <_result> a sosa:Result;
-        wgs84:lon ${position.coords.longitude};
+        wgs84:long ${position.coords.longitude};
         wgs84:lat ${position.coords.latitude}.
 
         <location> a sosa:ObservableProperty;
@@ -461,7 +461,7 @@ async function test(friend_container){
       const bindingsStream_1 = await myEngine.queryBindings(`
       SELECT ?lat ?long WHERE {
       ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
-         <http://www.w3.org/2003/01/geo/wgs84_pos#lon> ?long
+         <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long
       }`, {
         sources: [`${friend_container}${bindings[0].get('tmstmp').value}`],
         fetch: myfetchFunction,
