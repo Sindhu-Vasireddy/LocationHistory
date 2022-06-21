@@ -387,8 +387,39 @@ async function GetCoordinates(){
         tiles.addTo(map);
 
         marker.setLatLng([position.coords.latitude,position.coords.longitude]);
+        const query = `@prefix sosa: <http://www.w3.org/ns/sosa/>.
+        @prefix wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>.
+        @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+        @prefix plh: <https://w3id.org/personallocationhistory#> .
+        @prefix tm: <https://w3id.org/transportmode#> .
+        @prefix geo: <http://www.opengis.net/ont/geosparql#>.
+        @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 
-        const query = `<> <https://schema.org/latitude> "${position.coords.latitude}";<https://schema.org/longitude> "${position.coords.longitude}";<http://purl.org/dc/terms/created> "${position.timestamp}".`
+        <${navigator.platform}> a sosa:Platform;
+        sosa:hosts <locationSensor>.
+
+        <locationSensor> a sosa:Sensor;
+        sosa:madeObservation <>;
+        sosa:observes <location>;
+        sosa:isHostedBy <${navigator.platform}>.
+
+        <> a sosa:Observation;
+        sosa:observedProperty plh:Point ;
+        sosa:hasResult <_result>;
+        sosa:featureOfInterest <${window.sessionStorage.getItem('webID_later')}> ;
+        sosa:hasSimpleResult "POINT(${position.coords.latitude} ${position.coords.longitude})"^^geo:wktLiteral ;
+        sosa:madeBySensor <locationSensor>;
+        sosa:resultTime "${new Date(Number(position.timestamp)).toLocaleString()}"^^xsd:dateTime.
+
+        <_result> a sosa:Result;
+        wgs84:lon ${position.coords.longitude};
+        wgs84:lat ${position.coords.latitude}.
+
+        <location> a sosa:ObservableProperty;
+        rdfs:label "Location"@en .
+
+        <${window.sessionStorage.getItem('webID_later')}> a sosa:FeatureOfInterest.        `
+        // const query = `<> <https://schema.org/latitude> "${position.coords.latitude}";<https://schema.org/longitude> "${position.coords.longitude}";<http://purl.org/dc/terms/created> "${position.timestamp}".`
 
           // Send a PUT request to post to the source
           const response = await solidfetch(container+`${position.timestamp}`, {
@@ -429,8 +460,8 @@ async function test(friend_container){
       //Fetch the lat-long from the file corresponding to the latest timestamp
       const bindingsStream_1 = await myEngine.queryBindings(`
       SELECT ?lat ?long WHERE {
-      ?s <https://schema.org/latitude> ?lat ;
-         <https://schema.org/longitude> ?long
+      ?s <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat ;
+         <http://www.w3.org/2003/01/geo/wgs84_pos#lon> ?long
       }`, {
         sources: [`${friend_container}${bindings[0].get('tmstmp').value}`],
         fetch: myfetchFunction,
