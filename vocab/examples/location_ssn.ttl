@@ -22,7 +22,7 @@
     sosa:resultTime "2022-06-14T09:31:48Z"^^xsd:dateTime.
 
 <locationObservation1_result> a sosa:Result;
-    wgs84:lon 35.8648067;
+    wgs84:long 35.8648067;
     wgs84:lat 54.6195831;
     wgs84:alt 12.75;
     tm:transportMode tm:Walking.
