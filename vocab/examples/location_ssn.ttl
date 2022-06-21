@@ -1,0 +1,34 @@
+@prefix sosa: <http://www.w3.org/ns/sosa/>.
+@prefix wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix tm:	<https://w3id.org/transportmode#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<androidPhone> a sosa:Platform;
+    sosa:hosts <locationSensor>.
+
+<locationSensor> a sosa:Sensor;
+    sosa:madeObservation <locationObservation1>;
+    sosa:observes <location>;
+    sosa:isHostedBy <androidPhone>.
+
+<locationObservation1> a sosa:Observation;
+    sosa:hasResult <locationObservation1_result>;
+    sosa:hasFeatureOfInterest <https://pietercolpaert.be/#me> ; # Feature of Interest really MUST be a feature of interest according to SSN/SOSA
+    sosa:observedProperty <location> ; # required based on shape https://github.com/KnowWhereGraph/KWG-SHACL/blob/main/shapes/node-shapes/ObservationConstraint.ttl https://people.cs.ksu.edu/~hitzler/pub2/2021_IJCKG_SOSA_SHACL.pdf
+    sosa:hasSimpleResult "POINT(54.6195831 35.8648067)"^^geo:wktLiteral ;
+    sosa:madeBySensor <locationSensor>;
+    sosa:resultTime "2022-06-14T09:31:48Z"^^xsd:dateTime.
+
+<locationObservation1_result> a sosa:Result;
+    wgs84:long 35.8648067;
+    wgs84:lat 54.6195831;
+    wgs84:alt 12.75;
+    tm:transportMode tm:Walking.
+
+<location> a sosa:ObservableProperty;
+    rdfs:comment "The Geographic location observed by a sensor."@en ;
+    rdfs:label "Location"@en .
+
+<https://pietercolpaert.be/#me> a sosa:FeatureOfInterest.

@@ -1,0 +1,47 @@
+@prefix tm:	<https://w3id.org/transportmode#> .
+@prefix foaf: 	<http://xmlns.com/foaf/0.1/>.
+@prefix wgs84:	<http://www.w3.org/2003/01/geo/wgs84_pos#>.
+@prefix cc: 	<http://creativecommons.org/ns#>.
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#>.
+@prefix dct: 	<http://purl.org/dc/terms/>.
+@prefix vann: 	<http://purl.org/vocab/vann/>.
+@prefix rdf: 	<http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix skos: 	<http://www.w3.org/2004/02/skos/core#>.
+
+<https://w3id.org/transportmode> a foaf:Document;
+	foaf:primaryTopic tm:TransportMode.
+
+tm:transportMode a rdfs:Property;
+	skos:definition "Links to the kind of transport mode being used.";
+	rdfs:label "Transport Mode"@en;
+	rdfs:range tm:TransportMode.
+
+tm:TransportMode a skos:ConceptScheme; 
+	skos:prefLabel "Transport Mode"@en ;
+	skos:definition "The transport mode expresses the way which a person was moving from one place to another.";
+	cc:license <https://creativecommons.org/licenses/by/4.0/> ;
+	rdfs:comment "The transport mode expresses the way which a person was moving from one place to another.";
+	rdfs:label "Transport Mode"@en;
+	vann:preferredNamespacePrefix "tm" ;
+	vann:preferredNamespaceUri <https://w3id.org/transportmode#> ;
+	dct:creator <https://data.knows.idlab.ugent.be/person/woslabbi/#me> ;
+	dct:creator <https://data.knows.idlab.ugent.be/person/SindhuVasireddy/#me> ;
+	dct:creator <https://pietercolpaert.be/#me> ;
+	dct:issued "2022-06-10"^^xsd:date ;
+	dct:modified "2022-06-14"^^xsd:date .
+
+tm:Walking a skos:Concept; 
+	skos:inScheme tm:TransportMode;
+	skos:definition "This transport mode expresses that a person is walking.";
+	skos:prefLabel "Walking"@en.
+
+tm:Bicycling a skos:Concept; 
+	skos:inScheme tm:TransportMode;
+	skos:definition "This transport mode expresses that a person is bicycling.";
+	skos:prefLabel "Bicycling"@en.
+	
+tm:CarDriving a skos:Concept; 
+	skos:inScheme tm:TransportMode;
+	skos:definition "This transport mode expresses that a person is driving a car.";
+	skos:prefLabel "Car Driving"@en.
+	
