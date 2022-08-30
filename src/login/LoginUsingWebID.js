@@ -7,7 +7,7 @@ import {toHide, stepstoExecute} from '../UI/Frontend';
 import {giveAccessoftheContainertoOwner} from '../setup/data/OwnerAccess';
 import {settingContainer} from '../setup/data/Container';
 import {createInbox} from '../setup/inbox/Container';
-import {createShacl} from '../setup/shacl/create';
+import { createShacl } from '../setup/shacl/Create';
 //  Legacy RML implementation
 // import { createRmlRules } from "../setup/rml/project";
 
