@@ -1,6 +1,6 @@
 # LocationHistory App
 
-The app prototype, let's the user capture their location from browser after logging in with their WebID and store their raw location data as RDF which is validated against a SHACL shape. The Users can also request location from other users using their webID. They can also approve/revoke the requests for sharing location from other users. 
+The app [prototype](https://sindhu-vasireddy.github.io/LocationHistory/), let's the user capture their location from browser after logging in with their WebID and store their raw location data as RDF which is validated against a SHACL shape. The Users can also request location from other users using their webID. They can also approve/revoke the requests for sharing location from other users. 
 
 The UML sequence diagrams explaining the app workflow is available along with the data model used to create the rdf location data in UML and vocab folders.
 
