@@ -1,0 +1,18 @@
+name: Deploy the App
+
+on: [push,pull_request]
+
+jobs:
+    deploy-the-app:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Install all the dependencies
+          run: npm ci
+        - name: Build the code
+          run: npm run build
+        - name: Deploy the app
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./public

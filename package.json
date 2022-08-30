@@ -9,15 +9,20 @@
     "@inrupt/solid-client": "^1.19.0",
     "@inrupt/solid-client-authn-browser": "^1.11.5",
     "@inrupt/vocab-common-rdf": "^1.0.3",
+    "@rdfjs/parser-n3": "^1.1.4",
     "buffer": "^6.0.3",
     "leaflet": "^1.8.0",
-    "node-polyfill-webpack-plugin": "^1.1.4"
-    },
+    "node-polyfill-webpack-plugin": "^1.1.4",
+    "rdf-ext": "^2.0.1",
+    "rdf-validate-shacl": "^0.4.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.10.1"
+  },
   "devDependencies": {
     "css-loader": "^6.6.0",
-    "style-loader": "^3.3.1",
-    "webpack": "^5.72.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "eslint": "^8.23.0",
+    "eslint-config-google": "^0.14.0",
+    "style-loader": "^3.3.1"
   }
 }

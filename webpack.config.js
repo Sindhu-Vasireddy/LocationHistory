@@ -3,11 +3,11 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 
 module.exports = {
    mode: "development",
-   entry: path.resolve(__dirname,"main.js"),
+   entry: path.resolve(__dirname,"./src/main.js"),
    output: {
      path: path.resolve(__dirname), 
      filename: "index.js" 
-   },
+   }, 
   module: {
     rules: [
       {

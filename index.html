@@ -4,6 +4,8 @@
 		<meta charset="utf-8">
 		<title>Location History </title>
 		<style> .hidden { visibility: hidden; display: none;} </style>
+		<link rel="stylesheet" href="./assets/index.css">
+		<link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
    crossorigin=""/>
@@ -17,27 +19,37 @@
 
 	</head>
 	<body>
-		<div id="message"></div>
-		<div id="front_page">
+		<h1 id="App_name">LocationHistory App</h1>
 
+		<div id="front_page" class="login-box">
+			<h4 id="message"></h4>
+			<h5 id="message_eg"></h5>
+			<div id="webid_box" class="user-box">
         	<input type="text" id="webid" placeholder="Enter your webID">
-        	<button id="webid_Login">Login</button>
-        	<button id="start_posting" class="hidden">Post Location History</button>
+			</div>
+        	<div>
+				<button id="webid_Login">
+			   <span></span>
+			   <span></span>
+			   <span></span>
+			   <span></span>Login</button>
+				 </div>
     	</div>
 
-    	<div id="output">
+    	<div id="output" class="hidden text-font">
     	</div>
 
-    	<button id="req_frnd" class="hidden">Request Friend's Location!</button>
-    	<input type="text" id="friend_webid" placeholder="Enter your friend's webid to request their location!" class="hidden">
-    	<button id="request" class="hidden">Request</button>
+    	<div id="appname_login" class="app-name hidden">LocationHistory App</div>
+    	<button id="req_frnd" class="request-button hidden">Request Friend's Location!</button>
+    	<div id="friend_webid_div" class="input-box hidden"><input type="text" id="friend_webid" placeholder="Enter your friend's webid to request their location!" class="hidden"></div>
+    	<div id="request_div" class="request-box hidden"> <button id="request" class="hidden">Request</button> </div>
 
-    	<div id="approve_revoke">
+    	<div id="approve_revoke" class="buttons-list-box">
     	</div>
 
-    	<div id="map" class="hidden"></div>
+    	<div id="map" class="map-box hidden"></div>
     	<p id = "status"></p>
-    	<a id = "map-link" target="_blank"><br/></a>
+    	<!-- <a id = "map-link" target="_blank"><br/></a> -->
     	<br><br>
     	<button id="stop" class="hidden">Stop your location capture</button>
     	<button id="start" class="hidden">Start your location capture</button>
