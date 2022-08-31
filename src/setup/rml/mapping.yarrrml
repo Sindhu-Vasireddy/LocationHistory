@@ -1,0 +1,83 @@
+prefixes:
+  ex: http://www.example.com/
+  geo: http://www.opengis.net/ont/geosparql#
+  wgs84: http://www.w3.org/2003/01/geo/wgs84_pos#
+  plh: https://w3id.org/personallocationhistory#
+mappings:
+  people:
+    sources:
+      - [ src/setup/rml/Sample.csv~csv ]
+    s: https://svasired.pod.knows.idlab.ugent.be/public/YourLocationHistory/Data/$(unixtmstmp)
+    po:
+      - [ a, sosa:Observation ]
+      - p: sosa:observedProperty
+        o:
+          value: plh:Point
+             
+      - p: sosa:hasFeatureOfInterest
+        o:
+          value: $(webid)
+      - p: sosa:hasSimpleResult
+        o:
+          value: POINT($(lat) $(lon))
+          datatype: geo:wktLiteral
+          
+      - p: sosa:madeBySensor
+        o:
+          value: ex:locationsensor
+          
+      - p: sosa:resultTime  
+        o:
+          value: $(datetime)
+          datatype: xsd:dateTime
+          
+      - p: sosa:hasResult
+        o:
+          value: ex:_result
+  result:
+    sources:
+      - [ src/setup/rml/Sample.csv~csv ]
+    s: ex:_result
+    po:
+      - [a, sosa:result]
+      - [wgs84:lon, $(lon)]
+      - [wgs84:lat, $(lat)]
+      
+  location:
+    sources:
+      - [ src/setup/rml/Sample.csv~csv]
+    s: ex:location
+    po:
+      - [a, sosa:ObservableProperty]
+      - p: rdfs:label
+        o:
+          value: "location"
+          language: en
+          
+  webid:
+    sources:
+      - [ src/setup/rml/Sample.csv~csv]
+    s: $(webid)
+    po:
+      - [a, sosa:FeatureOfInterest]
+      
+  locationsensor:
+    sources:
+      - [ src/setup/rml/Sample.csv~csv]
+    s: ex:locationsensor
+    po:
+      - [ a, sosa:Sensor ]
+      - [ sosa:madeObservation, https://svasired.pod.knows.idlab.ugent.be/public/YourLocationHistory/Data/$(unixtmstmp)]
+      - [ sosa:observes, ex:location ]
+      - [ sosa:isHostedBy, ex:$(platform) ]
+      
+  platform:
+    sources:
+      - [ src/setup/rml/Sample.csv~csv]
+    s: ex:$(platform)
+    po:
+      - [ a, sosa:platform ]
+      - p: sosa:hosts
+        o:
+          value: ex:locationsensor
+
