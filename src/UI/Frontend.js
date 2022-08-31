@@ -5,6 +5,7 @@ import {getIssuerFromWebID, Login} from '../login/LoginUsingWebID';
 import {refreshNotifications} from '../notifications/Check';
 import {getCoordinates} from '../capture/Coordinates';
 import {sendNotifications} from '../notifications/Request';
+import {getPodUrl} from '../setup/data/Container';
 
 /**
  * Main Login entry function.
@@ -66,9 +67,11 @@ export async function stepstoExecute(map, marker, container) {
     document.getElementById('request').classList.add('hidden');
     document.getElementById('request_div').classList.add('hidden');
     document.getElementById('req_frnd').classList.remove('hidden');
-    const podUrlFrnd=await getIssuerFromWebID(webidFrnd);
-    const file=`${podUrlFrnd}public/YourLocationHistory/inbox.ttl`;
-    await sendNotifications(file);
+    getPodUrl(webidFrnd).then(async (pu) =>{
+      const podUrlFrnd=pu;
+      const file=`${podUrlFrnd}public/YourLocationHistory/inbox.ttl`;
+      await sendNotifications(file);
+    });
   });
 
   document.querySelector('#stop').addEventListener('click', () => {

@@ -44,7 +44,6 @@ export async function handleRedirectAfterLogin(map, marker) {
     document.getElementById('output').textContent='Session logged in!';
     settingContainer().then(async (c)=>{
       const container=c[0]; const podUrl=c[1];
-      console.log('Conatiner and pod inside then', container);
       await createInbox(container, podUrl);
       await giveAccessoftheContainertoOwner(container);
       await createShacl(container);

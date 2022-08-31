@@ -1,5 +1,5 @@
 const QueryEngine = require('@comunica/query-sparql').QueryEngine;
-
+import {getIssuerFromWebID} from '../../login/LoginUsingWebID';
 /**
  * Sets the container and podURL variables for the app.
  * @return {String[]} Container and Pod URL for the app.
@@ -15,7 +15,7 @@ export async function settingContainer() {
  * @param {String} webid WebID of the user.
  * @return {String} Location of user pod.
  */
-async function getPodUrl(webid) {
+export async function getPodUrl(webid) {
   const myEngineGetIssuer = new QueryEngine();
   const bindingsStream = await myEngineGetIssuer.queryBindings(`
     SELECT ?o WHERE {
@@ -24,12 +24,12 @@ async function getPodUrl(webid) {
     sources: [`${webid}`],
   });
   const bindings = await bindingsStream.toArray();
-  console.log(bindings);
+  // console.log(bindings);
   if (bindings.length==0) {
     // When webID doesn't have pim:storage use webID later
     console.log(`Since <http://www.w3.org/ns/pim/space#storage> is not available
     \n <http://www.w3.org/ns/solid/terms#oidcIssuer> is used for Pod url`);
-    const podUrl=window.sessionStorage.getItem('oidcIssuer_later');
+    const podUrl=await getIssuerFromWebID(webid);
     if (podUrl.endsWith('/')) {
       return podUrl;
     } else {

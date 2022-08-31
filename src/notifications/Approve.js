@@ -1,11 +1,11 @@
-import {getIssuerFromWebID} from '../login/LoginUsingWebID';
+import {getPodUrl} from '../setup/data/Container';
 /**
  * Sends Accepted Request Notifications to friend's inbox.
  * @param {String} rqstrWebid WebID of the requester.
  * @param {String} container Location data container path.
  */
 export async function sendRequestAcceptedNotification(rqstrWebid, container) {
-  const rqstrIssuer=await getIssuerFromWebID(rqstrWebid);
+  const rqstrIssuer=await getPodUrl(rqstrWebid);
   const query= `INSERT DATA {<${window.sessionStorage.getItem('webID_later')}> <http://tobeadded.com/GrantedAccessToLocation> <${container}>.}`;
   // Send a PATCH request the pod url to inbox.ttl
   const response = await fetch(rqstrIssuer+
