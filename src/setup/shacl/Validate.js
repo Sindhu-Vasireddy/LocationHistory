@@ -40,22 +40,17 @@ export async function main(shapes_, data_) {
  */
 async function loadDataset(filePath) {
   const stream = new Readable();
-  solidfetch(filePath, {
+  const response_ = await solidfetch(filePath, {
     method: 'GET',
     headers: {'Content-Type': 'text/turtle'},
     credentials: 'include',
-  }).then((response_) => {
-    response_.text().then((responsefile) => {
-      stream._read = () => {}; // stream should be made readable.
-      stream.push(responsefile.toString());
-      stream.push(null);
+  })
+  const responsefile = await response_.text()
+  stream._read = () => {}; // stream should be made readable.
+  stream.push(responsefile.toString());
+  stream.push(null);
 
-      const parser = new ParserN3({factory});
-      factory.dataset().import(parser.import(stream)).
-          then((q_)=>{
-            factoryDatatset=q_;
-          });
-    });
-  });
+  const parser = new ParserN3({factory});
+  let factoryDatatset = await factory.dataset().import(parser.import(stream));
   return factoryDatatset;
 }
