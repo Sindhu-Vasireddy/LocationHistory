@@ -40,7 +40,7 @@ ex:requiredHasResult
             ex:requiredLongitude
                 a           sh:PropertyShape ;
                 rdfs:label  "Longitude"@en ;
-                sh:path     wgs84:lon ;
+                sh:path     wgs84:long ;
                 sh:nodeKind sh:Literal ;
                 sh:minCount 1 .     
 

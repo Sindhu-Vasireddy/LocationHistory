@@ -91,7 +91,7 @@ export async function getCoordinates(map, marker, container) {
             <> a sosa:Observation;
             sosa:observedProperty <location> ;
             sosa:hasResult <_result>;
-            sosa:featureOfInterest <${window.sessionStorage.getItem('webID_later')}> ;
+            sosa:hasFeatureOfInterest <${window.sessionStorage.getItem('webID_later')}> ;
             sosa:hasSimpleResult "POINT(${position.coords.longitude} ${position.coords.latitude})"^^geo:wktLiteral ;
             sosa:madeBySensor <locationSensor>;
             sosa:resultTime "${new Date(Number(tmstmpName)).toISOString()}"^^xsd:dateTime.

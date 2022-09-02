@@ -1,8 +1,7 @@
-# LocationHistory App
 
 # Location History App
 
-The app prototype, let's the user capture their location from browser after logging in with their WebID and store their raw location data as RDF which is validated against a [SHACL](https://www.w3.org/TR/shacl/) shape. The Users can also request location from other users using their webID. They can also approve/revoke the requests for sharing location from other users.
+The app prototype, let's the user capture their location from browser after logging in with their WebID and store their raw location data as RDF which is validated against a SHACL shape. The Users can also request location from other users using their webID. They can also approve/revoke the requests for sharing location from other users. 
 
 This prototype is developed as part of the SOLIDLAB Research Challenge [#10](https://github.com/SolidLabResearch/Challenges/issues/10).
 
