@@ -50,14 +50,14 @@ Furthermore, a full example can be found at [here](vocab/examples/location_ssn.t
 
 The data points are stored in a container with location `$StorageSpace$public/YourLocationHistory/Data/` , where `$StorageSpace$` is the root storage of the pod.
 
-#### Discovery of the root pod TODO rewrite
+#### Discovery of the root pod
 
 The application discovers the root storage of your pod based on the `pim:storage` predicate as defined in the [Solid WebID](https://solid.github.io/webid-profile/#storage).
 
 <details>
 <summary>Extra information</summary>
 
-However, pim storage triples are **optional** in a Solid Profile. So as a fallback the URL corresponding to the `solid:oidcIssuer` is used when a storage is triple is not present.
+However, storage triples are **optional** in a Solid Profile. So as a fallback the URL corresponding to the `solid:oidcIssuer` is used when a storage triple is not present.
 
 In some cases this will point as well to your root storage, which means the application might work in that case. However, such a triple, [according to the specification](https://solid.github.io/webid-profile/#identity-provider), is only used  "*to indicate the address of a Solid Identity Provider capable of authenticating the WebID owner.*"
 
